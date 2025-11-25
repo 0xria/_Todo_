@@ -1,0 +1,2 @@
+- Features: Add, view, delete tasks, save/load from a file
+- Cybersecurity twist: Practice secure file handling; think about what happens if files are corrupted# _Todo_
