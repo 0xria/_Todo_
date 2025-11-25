@@ -42,7 +42,7 @@ def main():
     todo_list = TodoList()
 
     while True:
-        print("\nWhat's your Todo?")
+        print("\nWhat's on Your Todo?")
         print("i. Add Todo")
         print("ii. Mark In Progress")
         print("iii. Mark Completed")
