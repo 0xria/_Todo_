@@ -30,7 +30,7 @@ class TodoList:
         else:
             print("Invalid Task Index.")
 
-    def list_todos(self):
+    def view_todos(self):
         if not self.todos:
             print("No todos yet!")
         else:
@@ -46,7 +46,7 @@ def main():
         print("i. Add Todo")
         print("ii. Mark In Progress")
         print("iii. Mark Completed")
-        print("iv. List Todos")
+        print("iv. View Todos")
         print("v. Exit")
 
         command = input("What's Today's Agenda? ")
@@ -57,15 +57,15 @@ def main():
             todo_list.add_todo(date, task)
             print("Task added successfully.")
         elif command == "ii":
-            todo_list.list_todos()
+            todo_list.view_todos()
             index = int(input("Enter task index to mark as in progress: "))
             todo_list.mark_inprogress(index)
         elif command == "iii":
-            todo_list.list_todos()
+            todo_list.view_todos()
             index = int(input("Enter task index to mark as completed: "))
             todo_list.mark_completed(index)
         elif command == "iv":
-            todo_list.list_todos()
+            todo_list.view_todos()
         elif command == "v":
             print("Exiting Todo List. Goodbye!")
             break
