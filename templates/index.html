@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Board</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+</head>
+<body>
+    <h1>Todo Board</h1>
+
+    <div class="board">
+
+        <!-- ADD TASK COLUMN -->
+        <div class="column" id="add-task-column">
+            <h2>ADD TASK</h2>
+            <form method="POST" action="/add">
+                <input type="text" name="task" placeholder="Add a task..." required>
+                <input type="date" name="date" required>
+                <button type="submit">ADD</button>
+            </form>
+        </div>
+
+        <!-- TO DO COLUMN -->
+        <div class="column">
+            <h2>TO DO</h2>
+            <ul id="todo-list">
+                {% for todo in todos %}
+                    {% if not todo.inprogress and not todo.completed %}
+                        <li>
+                            [{{ todo.date }}] {{ todo.task }}
+                            <a href="/inprogress/{{ loop.index0 }}">Mark In Progress</a>
+                            <a href="/delete/{{ loop.index0 }}">Delete</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <!-- IN PROGRESS COLUMN -->
+        <div class="column">
+            <h2>IN PROGRESS</h2>
+            <ul id="in-progress-list">
+                {% for todo in todos %}
+                    {% if todo.inprogress and not todo.completed %}
+                        <li>
+                            [{{ todo.date }}] {{ todo.task }}
+                            <a href="/complete/{{ loop.index0 }}">Mark Completed</a>
+                            <a href="/delete/{{ loop.index0 }}">Delete</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- COMPLETED COLUMN -->
+        <div class="column">
+            <h2>COMPLETED</h2>
+            <ul id="completed-list">
+                {% for todo in todos %}
+                    {% if todo.completed %}
+                        <li>
+                            [{{ todo.date }}] {{ todo.task }}
+                            <a href="/delete/{{ loop.index0 }}">Delete</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

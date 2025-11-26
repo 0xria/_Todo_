@@ -1,0 +1,103 @@
+/* General page styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(270deg, #003db8, #0056d6, #003db8);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-size: 600% 600%;
+    animation: wave 20s ease infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@keyframes wave {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+h1 {
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 0 10px cyan;
+
+}
+
+/* Board container */
+.board {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+/* Columns */
+.column {
+    background: rgba(0,0,0,0.3);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    flex: 1;
+    min-width: 200px;
+    backdrop-filter: blur(10px);
+}
+
+.column h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+/* Forms */
+form input[type="text"],
+form input[type="date"] {
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Task lists */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px;
+    margin-bottom: 5px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+li a {
+    text-decoration: none;
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #007BFF;
+}
+
+li a:hover {
+    text-decoration: underline;
+}

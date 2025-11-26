@@ -87,6 +87,7 @@ def main():
         print("iii. Mark Completed")
         print("iv. View Todos")
         print("v. Exit")
+        print("vi. Export to HTML")
 
         command = input("What's Today's Agenda? ")
         
@@ -107,9 +108,71 @@ def main():
             todo_list.view_todos()
         elif command == "v":
             print("Exiting Todo List. Goodbye!")
+        elif command == "vi":
+            export_to_html(todo_list.todos)
             break
         else:
             print("Invalid Command. Please try again.")
+
+    
+def export_to_html(todos, filename="todo.html"):
+    html = """
+    <html>
+    <head>
+        <title>Todo List</title>
+        <style>
+            body {
+                background: #000000;
+                color: #00ffcc;
+                font-family: 'Consolas', monospace;
+                padding: 30px;
+            }
+            h1 {
+                color: #00ffaa;
+                font-size: 32px;
+            }
+            .task {
+                padding: 12px;
+                margin-bottom: 10px;
+                border: 1px solid #00ffcc;
+                border-radius: 6px;
+            }
+            .done {
+                text-decoration: line-through;
+                opacity: 0.5;
+            }
+            .progress {
+                border-color: #ffaa00;
+                color: #ffaa00;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ria’s Todo List</h1>
+        <div>
+    """
+
+    for t in todos:
+        if t.completed:
+            cls = "task done"
+        elif t.inprogress:
+            cls = "task progress"
+        else:
+            cls = "task"
+
+        html += f"<div class='{cls}'>[{t.date}] — {t.task}</div>"
+
+    html += """
+        </div>
+    </body>
+    </html>
+    """
+
+    with open(filename, "w") as f:
+        f.write(html)
+
+    print(f"Exported to {filename}")
+
 
 if __name__ == "__main__":
     main()
