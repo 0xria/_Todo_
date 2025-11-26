@@ -1,4 +1,6 @@
 from datetime import date
+import json
+import os
 
 
 class Todo:
@@ -10,15 +12,17 @@ class Todo:
 
 class TodoList:
     def __init__(self):
-        self.todos = []
+        self.todos = load_todos()
 
     def add_todo(self, date, task):
         new_todo = Todo(date, task, False, False)
         self.todos.append(new_todo)
+        store_todos(self.todos)
 
     def mark_inprogress(self, index):
         if 0 <= index < len(self.todos):
             self.todos[index].inprogress = True
+            store_todos(self.todos)
             print(f"Task '{self.todos[index].task}' marked as In Progress.")
         else:
             print("Invalid Task Index.")
@@ -26,6 +30,7 @@ class TodoList:
     def mark_completed(self, index):
         if 0 <= index < len(self.todos):
             self.todos[index].completed = True
+            store_todos(self.todos)
             print(f"Task '{self.todos[index].task}' marked as Completed.")
         else:
             print("Invalid Task Index.")
@@ -37,6 +42,40 @@ class TodoList:
             for i, todo in enumerate(self.todos):
                 status = "Completed" if todo.completed else "In Progress" if todo.inprogress else "Not Started" 
                 print(f"{i}. [{todo.date}] {todo.task} - {status}")
+
+def store_todos(todo_list, filename="todos.json"):
+    """Store todos to a JSON file"""
+    todos_data = []
+    for todo in todo_list:
+        todos_data.append({
+            "date": todo.date,
+            "task": todo.task,
+            "inprogress": todo.inprogress,
+            "completed": todo.completed
+        })
+    
+    with open(filename, "w") as f:
+        json.dump(todos_data, f, indent=4)
+
+def load_todos(filename="todos.json"): #load todos from json file
+    if not os.path.exists(filename):
+        return []
+    
+    try:
+        with open(filename, "r") as f:
+            todos_data = json.load(f)
+            todos = []
+            for todo_dict in todos_data:
+                todo = Todo(
+                    todo_dict["date"],
+                    todo_dict["task"],
+                    todo_dict["inprogress"],
+                    todo_dict["completed"]
+                )
+                todos.append(todo)
+            return todos
+    except (json.JSONDecodeError, KeyError):
+        return []
 
 def main():
     todo_list = TodoList()
@@ -71,10 +110,6 @@ def main():
             break
         else:
             print("Invalid Command. Please try again.")
-            
+
 if __name__ == "__main__":
     main()
-
-
-
-
