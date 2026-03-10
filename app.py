@@ -62,5 +62,36 @@ def delete_task(index):
         store_todos(todos)
     return redirect(url_for("index"))
 
+def archive_todo(todo):
+    """help to append single todo to archive file"""
+    archived = []
+    if os.path.exists(TASK_FILE):
+        try:
+            with open(TASK_FILE, "r") as f:
+                archived = json.load(f)
+        except json.JSONDecodeError:
+            archived = []
+
+    archived.appemd(todo)
+    with open(TASK_FILE, "w") as f:
+        json.dump(archived, f, indent=4)
+
+@app.route("/delete/<int:index>")
+def delete_task(index):
+    todos = load_todos()
+    if 0 <= index < len (todos):
+        task_to_archive = todos.pop(index) #get task before removing
+        archive_todo(task_to_archive) #store in archive file
+        store_todos(todos) #save updated list without deleted task
+    return redirect(url_for("index"))
+
+@app.route("/archive")
+def view_archive():
+    if not os.path.exists(TASK_FILE):
+        archived_todos = []
+    else:
+        with open(TASK_FILE, "r") as f:
+            archived_todos = json.load(f)
+    return render_template("archive.html", archived_todos=archived_todos)
 if __name__ == "__main__":
     app.run(debug=True)
